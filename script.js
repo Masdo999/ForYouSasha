@@ -1,50 +1,92 @@
-const yesBtn = document.getElementById("yesBtn");
-const sureBtn = document.getElementById("sureBtn");
-const message = document.getElementById("message");
-const bgMusic = document.getElementById("bgMusic");
+const yesBtn = document.getElementById('yesBtn');
+const sureBtn = document.getElementById('sureBtn');
+const message = document.getElementById('message');
+const bgMusic = document.getElementById('bgMusic');
 
 let clickCount = 0;
-let heartInterval = null;
+let scaleYes = 1;
+let heartInterval;
 
-// Tombol ARE YOU SURE?
-sureBtn.addEventListener("click", () => {
-  clickCount++;
+const funnyTexts = [
+    "ARE YOU SURE? 🤔",
+    "Really really sure? 😏",
+    "Hmm… think again 💕",
+    "HEY 😳",
+    "You can’t escape 😈",
+    "JUST SAY YES 😂"
+];
 
-  const x = Math.random() * (window.innerWidth - 200);
-  const y = Math.random() * (window.innerHeight - 100);
+// tombol ARE YOU SURE kabur
+sureBtn.addEventListener('click', () => {
+    clickCount++;
 
-  yesBtn.style.position = "absolute";
-  yesBtn.style.left = x + "px";
-  yesBtn.style.top = y + "px";
-  yesBtn.style.animation = "shake 0.4s";
+    const x = Math.random() * (window.innerWidth - sureBtn.offsetWidth);
+    const y = Math.random() * (window.innerHeight - sureBtn.offsetHeight);
 
-  setTimeout(() => yesBtn.style.animation = "", 400);
+    sureBtn.style.position = 'absolute';
+    sureBtn.style.left = x + 'px';
+    sureBtn.style.top = y + 'px';
 
-  if (clickCount >= 3) {
-    sureBtn.textContent = "Just say YES 😘";
-  }
+    // YES makin besar
+    scaleYes += 0.15;
+    yesBtn.style.transform = `scale(${scaleYes})`;
+
+    sureBtn.textContent = funnyTexts[Math.min(clickCount, funnyTexts.length - 1)];
+
+    if (clickCount > 5) {
+        sureBtn.textContent = "NO WAY OUT 😆";
+    }
+
+    playClickSound();
 });
 
-// Tombol YES
-yesBtn.addEventListener("click", () => {
-  bgMusic.play();
-  bgMusic.volume = 0.5;
+// tombol YES
+yesBtn.addEventListener('click', () => {
+    bgMusic.play().catch(() => {});
+    bgMusic.volume = 0.5;
 
-  message.style.display = "block";
-  message.innerHTML = "Yay! 💕 You said YES! Happy Valentine's Day 🎉";
+    yesBtn.style.display = 'none';
+    sureBtn.style.display = 'none';
 
-  yesBtn.style.display = "none";
-  sureBtn.style.display = "none";
+    message.style.display = 'block';
+    typeText(
+        "YAAAAY 💖💖💖You finally said YES!!! 😍Happy Valentine's Day My Princess 💕✨",
+        message
+    );
 
-  heartInterval = setInterval(createHeart, 300);
+    startHearts();
 });
 
-function createHeart() {
-  const heart = document.createElement("div");
-  heart.className = "hearts";
-  heart.innerHTML = "❤️";
-  heart.style.left = Math.random() * 100 + "%";
-  document.body.appendChild(heart);
+// typing effect
+function typeText(text, element) {
+    element.innerHTML = "";
+    let i = 0;
+    const typing = setInterval(() => {
+        element.innerHTML += text.charAt(i);
+        i++;
+        if (i >= text.length) clearInterval(typing);
+    }, 50);
+}
 
-  setTimeout(() => heart.remove(), 5000);
+// hati + bintang jatuh
+function startHearts() {
+    clearInterval(heartInterval);
+    heartInterval = setInterval(() => {
+        const item = document.createElement('div');
+        item.className = 'hearts';
+        item.innerHTML = Math.random() > 0.5 ? '❤️' : '⭐';
+        item.style.left = Math.random() * 100 + '%';
+        document.body.appendChild(item);
+        setTimeout(() => item.remove(), 5000);
+    }, 200);
+}
+
+// suara klik
+const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+function playClickSound() {
+    const osc = audioContext.createOscillator();
+    osc.frequency.value = 700;
+    osc.connect(audioContext.destination);
+    osc.start();
+    osc.stop(audioContext.currentTime + 0.1);
 }
