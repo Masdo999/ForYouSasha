@@ -16,7 +16,6 @@ const funnyTexts = [
     "JUST SAY YES 😂"
 ];
 
-// tombol ARE YOU SURE kabur
 sureBtn.addEventListener('click', () => {
     clickCount++;
 
@@ -40,24 +39,11 @@ sureBtn.addEventListener('click', () => {
     playClickSound();
 });
 
-// tombol YES
 yesBtn.addEventListener('click', () => {
-    bgMusic.play().catch(() => {});
-    bgMusic.volume = 0.5;
-
-    yesBtn.style.display = 'none';
-    sureBtn.style.display = 'none';
-
-    message.style.display = 'block';
-    typeText(
-        "YAAAAY 💖💖💖You finally said YES!!! 😍Happy Valentine's Day My Princess 💕✨",
-        message
-    );
-
-    startHearts();
+    window.location.href = "valentine.html";
 });
 
-// typing effect
+
 function typeText(text, element) {
     element.innerHTML = "";
     let i = 0;
@@ -68,7 +54,6 @@ function typeText(text, element) {
     }, 50);
 }
 
-// hati + bintang jatuh
 function startHearts() {
     clearInterval(heartInterval);
     heartInterval = setInterval(() => {
@@ -81,7 +66,6 @@ function startHearts() {
     }, 200);
 }
 
-// suara klik
 const audioContext = new (window.AudioContext || window.webkitAudioContext)();
 function playClickSound() {
     const osc = audioContext.createOscillator();
