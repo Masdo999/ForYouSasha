@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Happy Valentine 💕</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+:root{
+  --pink1:#ffd1dc;
+  --pink2:#ff9ecf;
+  --pink3:#ff6fb1;
+  --pink4:#ffb3d9;
+  --white:#ffffff;
+}
+
+*{box-sizing:border-box}
+
+body{
+  margin:0;
+  min-height:100vh;
+  font-family:'Comic Sans MS', cursive, sans-serif;
+  background:
+    radial-gradient(1200px 600px at 10% -10%, #fff 0%, transparent 40%),
+    radial-gradient(800px 500px at 90% -10%, #fff 0%, transparent 45%),
+    linear-gradient(135deg, var(--pink1), var(--pink2), var(--pink3));
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  overflow:hidden;
+  color:#fff;
+}
+
+.bubble{
+  position:absolute;
+  bottom:-120px;
+  width:40px;height:40px;
+  background:rgba(255,255,255,.35);
+  border-radius:50%;
+  filter:blur(.5px);
+  animation: floatUp 10s linear infinite;
+}
+@keyframes floatUp{
+  to{ transform:translateY(-120vh) scale(1.2); opacity:0;}
+}
+
+.card{
+  position:relative;
+  background:rgba(255,255,255,.25);
+  backdrop-filter: blur(12px);
+  padding:36px 28px 32px;
+  border-radius:28px;
+  box-shadow:0 25px 60px rgba(255,105,180,.35);
+  max-width:420px;
+  text-align:center;
+  animation: pop .7s ease;
+}
+@keyframes pop{
+  from{transform:scale(.75);opacity:0}
+  to{transform:scale(1);opacity:1}
+}
+
+.ribbon{
+  position:absolute;
+  top:-14px; left:50%;
+  transform:translateX(-50%);
+  background:linear-gradient(45deg,#ff4f9a,#ff7fbf);
+  padding:8px 18px;
+  border-radius:999px;
+  font-size:.9em;
+  box-shadow:0 8px 20px rgba(0,0,0,.25);
+}
+
+.big-heart{
+  font-size:4.2em;
+  animation:pulse 1.2s infinite;
+  margin-top:10px;
+}
+@keyframes pulse{
+  0%,100%{transform:scale(1)}
+  50%{transform:scale(1.25)}
+}
+
+h1{
+  margin:10px 0 6px;
+  font-size:2.4em;
+  animation:bounce 1.6s infinite;
+}
+@keyframes bounce{
+  0%,100%{transform:translateY(0)}
+  50%{transform:translateY(-10px)}
+}
+
+p{
+  margin:10px 0 22px;
+  line-height:1.6;
+  font-size:1.15em;
+}
+
+.actions{
+  display:flex;
+  gap:14px;
+  justify-content:center;
+  flex-wrap:wrap;
+}
+
+.btn{
+  border:none;
+  border-radius:999px;
+  padding:12px 22px;
+  font-size:1em;
+  cursor:pointer;
+  color:#fff;
+  background:linear-gradient(45deg,#ff5fa2,#ff85bd);
+  box-shadow:0 10px 22px rgba(0,0,0,.25);
+  transition:.25s;
+}
+.btn.secondary{
+  background:linear-gradient(45deg,#ffa6d1,#ff7fbf);
+}
+.btn:hover{ transform:scale(1.08) }
+
+.fall{
+  position:absolute;
+  top:-10%;
+  font-size:1.9em;
+  animation: fall 5s linear;
+  pointer-events:none;
+}
+@keyframes fall{
+  to{ transform:translateY(120vh) rotate(360deg); opacity:0 }
+}
+</style>
+</head>
+
+<body>
+
+<div class="bubble" style="left:10%; animation-duration:11s; width:26px;height:26px"></div>
+<div class="bubble" style="left:25%; animation-duration:9s; width:18px;height:18px"></div>
+<div class="bubble" style="left:55%; animation-duration:12s; width:34px;height:34px"></div>
+<div class="bubble" style="left:80%; animation-duration:10s; width:22px;height:22px"></div>
+
+<div class="card">
+  <div class="ribbon">💌 For Raisha Gendis Avivia</div>
+  <div class="big-heart">💖</div>
+  <h1>YAAAAY!</h1>
+  <p>
+    You said <b>YES</b> 😍<br>
+    You finally said YES 💕<br>
+    Happy Valentine’s Day My Princess ✨
+  </p>
+
+  <div class="actions">
+    <button class="btn" onclick="spawnHearts()">More Love 💗</button>
+    <button class="btn secondary" onclick="goBack()">⬅ Back</button>
+  </div>
+</div>
+
+<audio id="music" loop>
+  <source src="valentine.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+const music = document.getElementById('music');
+music.volume = 0.5;
+music.play().catch(()=>{
+  document.body.addEventListener('click',()=>music.play().catch(()=>{}),{once:true});
+});
+
+function spawnHearts(){
+  for(let i=0;i<12;i++){
+    const el=document.createElement('div');
+    el.className='fall';
+    el.innerHTML=Math.random()>.5?'❤️':'✨';
+    el.style.left=Math.random()*100+'%';
+    el.style.fontSize=(Math.random()*1.2+1.2)+'em';
+    document.body.appendChild(el);
+    setTimeout(()=>el.remove(),5000);
+  }
+}
+setInterval(spawnHearts, 900);
+
+function goBack(){
+  window.location.href='index.html';
+}
+</script>
+
+</body>
+</html>
