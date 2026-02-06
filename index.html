@@ -3,22 +3,81 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Will You Be My Valentine?</title>
-    <link rel="stylesheet" href="styles.css"> <!-- Link ke file CSS -->
+    <title>Will You Be My Valentine? 💖</title>
+
+    <link rel="stylesheet" href="styles.css">
+
+    <style>
+        body{
+            background: linear-gradient(135deg,#ffe1ec,#ffb6d5,#ff7eb6);
+        }
+
+        .container{
+            position: relative; 
+            background: rgba(255,255,255,0.25);
+            backdrop-filter: blur(12px);
+            border-radius: 30px;
+            padding: 45px 35px;
+            box-shadow: 0 25px 60px rgba(255,105,180,0.45);
+            animation: pop 0.7s ease;
+        }
+
+        @keyframes pop{
+            from{ transform: scale(0.7); opacity:0; }
+            to{ transform: scale(1); opacity:1; }
+        }
+
+        h1{
+            animation: bounce 1.5s infinite;
+        }
+
+        @keyframes bounce{
+            0%,100%{ transform: translateY(0); }
+            50%{ transform: translateY(-10px); }
+        }
+
+        .heart{
+            position: absolute;
+            bottom: -50px;
+            font-size: 1.5em;
+            animation: floatUp 8s linear infinite;
+            opacity: .8;
+            pointer-events: none;
+        }
+
+        @keyframes floatUp{
+            to{
+                transform: translateY(-120vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+    </style>
 </head>
+
 <body>
+
+    <!-- dekorasi hati -->
+    <div class="heart" style="left:10%">💖</div>
+    <div class="heart" style="left:30%; animation-duration:10s">💕</div>
+    <div class="heart" style="left:55%; animation-duration:9s">💗</div>
+    <div class="heart" style="left:75%; animation-duration:11s">✨</div>
+
     <div class="container">
         <h1>Will You Be My Valentine? 💖</h1>
+
         <div class="buttons">
             <button id="yesBtn">YES 😍</button>
             <button id="sureBtn">ARE YOU SURE? 🤔</button>
         </div>
+
         <div id="message"></div>
     </div>
+
     <audio id="bgMusic" loop>
         <source src="valentine.mp3" type="audio/mpeg">
         Your browser does not support the audio element.
     </audio>
-    <script src="script.js"></script> <!-- Link ke file JS -->
+
+    <script src="script.js"></script>
 </body>
 </html>
